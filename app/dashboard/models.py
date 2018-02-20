@@ -316,6 +316,10 @@ class Bounty(SuperModel):
             return None
 
     @property
+    def token_value_in_usdt(self):
+        return round(convert_token_to_usdt(self.token_name), 2)
+
+    @property
     def desc(self):
         return "{} {} {} {}".format(naturaltime(self.web3_created), self.idx_project_length, self.bounty_type,
                                     self.experience_level)
@@ -534,6 +538,11 @@ class Tip(SuperModel):
             return round(float(convert_amount(self.value_in_eth, 'ETH', 'USDT')) / decimals, 2)
         except Exception:
             return None
+
+    # TODO: DRY
+    @property
+    def token_value_in_usdt(self):
+        return round(convert_token_to_usdt(self.token_name), 2)
 
     @property
     def status(self):
